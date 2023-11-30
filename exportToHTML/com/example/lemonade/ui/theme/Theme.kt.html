@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Theme.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Theme.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.lemonade.ui.theme</span>
+
+<span class="s1">import android.app.Activity</span>
+<span class="s1">import android.os.Build</span>
+<span class="s1">import androidx.compose.foundation.isSystemInDarkTheme</span>
+<span class="s1">import androidx.compose.material3.MaterialTheme</span>
+<span class="s1">import androidx.compose.material3.darkColorScheme</span>
+<span class="s1">import androidx.compose.material3.dynamicDarkColorScheme</span>
+<span class="s1">import androidx.compose.material3.dynamicLightColorScheme</span>
+<span class="s1">import androidx.compose.material3.lightColorScheme</span>
+<span class="s1">import androidx.compose.runtime.Composable</span>
+<span class="s1">import androidx.compose.runtime.SideEffect</span>
+<span class="s1">import androidx.compose.ui.graphics.toArgb</span>
+<span class="s1">import androidx.compose.ui.platform.LocalContext</span>
+<span class="s1">import androidx.compose.ui.platform.LocalView</span>
+<span class="s1">import androidx.core.view.WindowCompat</span>
+
+<span class="s1">private </span><span class="s0">val </span><span class="s1">LightColorScheme = lightColorScheme(</span>
+    <span class="s1">primary = md_theme_light_primary</span><span class="s0">,</span>
+    <span class="s1">onPrimary = md_theme_light_onPrimary</span><span class="s0">,</span>
+    <span class="s1">primaryContainer = md_theme_light_primaryContainer</span><span class="s0">,</span>
+    <span class="s1">onPrimaryContainer = md_theme_light_onPrimaryContainer</span><span class="s0">,</span>
+    <span class="s1">secondary = md_theme_light_secondary</span><span class="s0">,</span>
+    <span class="s1">onSecondary = md_theme_light_onSecondary</span><span class="s0">,</span>
+    <span class="s1">secondaryContainer = md_theme_light_secondaryContainer</span><span class="s0">,</span>
+    <span class="s1">onSecondaryContainer = md_theme_light_onSecondaryContainer</span><span class="s0">,</span>
+    <span class="s1">tertiary = md_theme_light_tertiary</span><span class="s0">,</span>
+    <span class="s1">onTertiary = md_theme_light_onTertiary</span><span class="s0">,</span>
+    <span class="s1">tertiaryContainer = md_theme_light_tertiaryContainer</span><span class="s0">,</span>
+    <span class="s1">onTertiaryContainer = md_theme_light_onTertiaryContainer</span><span class="s0">,</span>
+    <span class="s1">error = md_theme_light_error</span><span class="s0">,</span>
+    <span class="s1">errorContainer = md_theme_light_errorContainer</span><span class="s0">,</span>
+    <span class="s1">onError = md_theme_light_onError</span><span class="s0">,</span>
+    <span class="s1">onErrorContainer = md_theme_light_onErrorContainer</span><span class="s0">,</span>
+    <span class="s1">background = md_theme_light_background</span><span class="s0">,</span>
+    <span class="s1">onBackground = md_theme_light_onBackground</span><span class="s0">,</span>
+    <span class="s1">surface = md_theme_light_surface</span><span class="s0">,</span>
+    <span class="s1">onSurface = md_theme_light_onSurface</span><span class="s0">,</span>
+    <span class="s1">surfaceVariant = md_theme_light_surfaceVariant</span><span class="s0">,</span>
+    <span class="s1">onSurfaceVariant = md_theme_light_onSurfaceVariant</span><span class="s0">,</span>
+    <span class="s1">outline = md_theme_light_outline</span><span class="s0">,</span>
+    <span class="s1">inverseOnSurface = md_theme_light_inverseOnSurface</span><span class="s0">,</span>
+    <span class="s1">inverseSurface = md_theme_light_inverseSurface</span><span class="s0">,</span>
+    <span class="s1">inversePrimary = md_theme_light_inversePrimary</span><span class="s0">,</span>
+    <span class="s1">surfaceTint = md_theme_light_surfaceTint</span><span class="s0">,</span>
+    <span class="s1">outlineVariant = md_theme_light_outlineVariant</span><span class="s0">,</span>
+    <span class="s1">scrim = md_theme_light_scrim</span><span class="s0">,</span>
+<span class="s1">)</span>
+
+
+<span class="s1">private </span><span class="s0">val </span><span class="s1">DarkColorScheme = darkColorScheme(</span>
+    <span class="s1">primary = md_theme_dark_primary</span><span class="s0">,</span>
+    <span class="s1">onPrimary = md_theme_dark_onPrimary</span><span class="s0">,</span>
+    <span class="s1">primaryContainer = md_theme_dark_primaryContainer</span><span class="s0">,</span>
+    <span class="s1">onPrimaryContainer = md_theme_dark_onPrimaryContainer</span><span class="s0">,</span>
+    <span class="s1">secondary = md_theme_dark_secondary</span><span class="s0">,</span>
+    <span class="s1">onSecondary = md_theme_dark_onSecondary</span><span class="s0">,</span>
+    <span class="s1">secondaryContainer = md_theme_dark_secondaryContainer</span><span class="s0">,</span>
+    <span class="s1">onSecondaryContainer = md_theme_dark_onSecondaryContainer</span><span class="s0">,</span>
+    <span class="s1">tertiary = md_theme_dark_tertiary</span><span class="s0">,</span>
+    <span class="s1">onTertiary = md_theme_dark_onTertiary</span><span class="s0">,</span>
+    <span class="s1">tertiaryContainer = md_theme_dark_tertiaryContainer</span><span class="s0">,</span>
+    <span class="s1">onTertiaryContainer = md_theme_dark_onTertiaryContainer</span><span class="s0">,</span>
+    <span class="s1">error = md_theme_dark_error</span><span class="s0">,</span>
+    <span class="s1">errorContainer = md_theme_dark_errorContainer</span><span class="s0">,</span>
+    <span class="s1">onError = md_theme_dark_onError</span><span class="s0">,</span>
+    <span class="s1">onErrorContainer = md_theme_dark_onErrorContainer</span><span class="s0">,</span>
+    <span class="s1">background = md_theme_dark_background</span><span class="s0">,</span>
+    <span class="s1">onBackground = md_theme_dark_onBackground</span><span class="s0">,</span>
+    <span class="s1">surface = md_theme_dark_surface</span><span class="s0">,</span>
+    <span class="s1">onSurface = md_theme_dark_onSurface</span><span class="s0">,</span>
+    <span class="s1">surfaceVariant = md_theme_dark_surfaceVariant</span><span class="s0">,</span>
+    <span class="s1">onSurfaceVariant = md_theme_dark_onSurfaceVariant</span><span class="s0">,</span>
+    <span class="s1">outline = md_theme_dark_outline</span><span class="s0">,</span>
+    <span class="s1">inverseOnSurface = md_theme_dark_inverseOnSurface</span><span class="s0">,</span>
+    <span class="s1">inverseSurface = md_theme_dark_inverseSurface</span><span class="s0">,</span>
+    <span class="s1">inversePrimary = md_theme_dark_inversePrimary</span><span class="s0">,</span>
+    <span class="s1">surfaceTint = md_theme_dark_surfaceTint</span><span class="s0">,</span>
+    <span class="s1">outlineVariant = md_theme_dark_outlineVariant</span><span class="s0">,</span>
+    <span class="s1">scrim = md_theme_dark_scrim</span><span class="s0">,</span>
+<span class="s1">)</span>
+
+<span class="s1">@Composable</span>
+<span class="s0">fun </span><span class="s1">AppTheme(</span>
+    <span class="s1">darkTheme: Boolean = isSystemInDarkTheme()</span><span class="s0">,</span>
+    <span class="s1">dynamicColor: Boolean = </span><span class="s0">false,</span>
+    <span class="s1">content: @Composable () -&gt; Unit</span>
+<span class="s1">) {</span>
+    <span class="s0">val </span><span class="s1">colorScheme = </span><span class="s0">when </span><span class="s1">{</span>
+        <span class="s1">dynamicColor &amp;&amp; Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.S -&gt; {</span>
+            <span class="s0">val </span><span class="s1">context = LocalContext.current</span>
+            <span class="s0">if </span><span class="s1">(darkTheme) dynamicDarkColorScheme(context) </span><span class="s0">else </span><span class="s1">dynamicLightColorScheme(context)</span>
+        <span class="s1">}</span>
+
+        <span class="s1">darkTheme -&gt; DarkColorScheme</span>
+        <span class="s0">else </span><span class="s1">-&gt; LightColorScheme</span>
+    <span class="s1">}</span>
+    <span class="s0">val </span><span class="s1">view = LocalView.current</span>
+    <span class="s0">if </span><span class="s1">(!view.isInEditMode) {</span>
+        <span class="s1">SideEffect {</span>
+            <span class="s0">val </span><span class="s1">window = (view.context </span><span class="s0">as </span><span class="s1">Activity).window</span>
+            <span class="s1">window.statusBarColor = colorScheme.primary.toArgb()</span>
+            <span class="s1">WindowCompat.getInsetsController(window</span><span class="s0">, </span><span class="s1">view).isAppearanceLightStatusBars = darkTheme</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">MaterialTheme(</span>
+        <span class="s1">colorScheme = colorScheme</span><span class="s0">,</span>
+        <span class="s1">typography = Typography</span><span class="s0">,</span>
+        <span class="s1">content = content</span>
+    <span class="s1">)</span>
+<span class="s1">}</span></pre>
+</body>
+</html>
